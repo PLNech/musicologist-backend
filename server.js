@@ -1,6 +1,10 @@
 const Hapi = require('hapi');
 const Good = require('good');
 
+const handleFulfilment = function (request, reply) {
+    reply("Payload:" + request.payload);
+};
+
 // Init server
 const server = new Hapi.Server();
 server.connection({
@@ -9,13 +13,20 @@ server.connection({
 });
 
 // Setup routes
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-        reply("Success!\n");
+server.route([
+    {
+        method: 'GET',
+        path: '/',
+        handler: function (request, reply) {
+            reply("Success!\n");
+        }
+    },
+    {
+        method: 'POST',
+        path: '/fulfillment',
+        handler: handleFulfilment
     }
-});
+]);
 
 // Setup reporting
 server.register({
