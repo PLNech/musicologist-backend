@@ -4,7 +4,8 @@
   "description": "Musicologist's backend",
   "main": "index.js",
   "dependencies": {
-    "algoliasearch": "^3.24.3"
+    "algoliasearch": "^3.24.3",
+    "hapi": "^16.5.2"
   },
   "devDependencies": {},
   "scripts": {
