@@ -3,10 +3,15 @@ const Good = require('good');
 const algoliasearch = require('algoliasearch');
 const client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
 const index = client.initIndex("songs");
+const version = 1;
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
-    let response = {'source': "Algolia"};
+    let response = {
+        'source': "Algolia",
+        'backend_version': version,
+        data: []
+    };
 
     let artist = '';
     if (req.payload.result.parameters['artist']) {
@@ -20,8 +25,7 @@ const handleFulfilment = function (req, reply) {
         server.log(TAG, "Period: " + period);
     }
 
-    if (artist.length !== 0)
-    {
+    if (artist.length !== 0) {
         let songs = [];
         index.search(artist, (err, content) => {
             if (err) {
