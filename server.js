@@ -6,7 +6,7 @@ const index = client.initIndex("songs");
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
-    let response = {};
+    let response = {'source': "Algolia"};
 
     let artist = '';
     if (req.payload.result.parameters['artist']) {
@@ -30,16 +30,19 @@ const handleFulfilment = function (req, reply) {
             }
 
             server.log(TAG, "Searching for " + artist + " returned " + content.nbHits + " results.");
-            for (let i in content.hits) {
-                let hit = content.hits[i];
-                server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
-                songs.push(hit.trackName);
+            if (content.nbHits > 0) {
+                for (let i in content.hits) {
+                    let hit = content.hits[i];
+                    server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
+                    songs.push(hit.trackName);
+                }
+                response["speech"] = "I found those songs: " + songs.join(", ") + ".";
+                response["data"] = songs;
+            } else {
+                response["speech"] = "I'm afraid I know no songs from " + artist + ".";
             }
-            response["speech"] = "I found those songs: " + songs.join(", ") + ".";
-            response["displayText"] = response["speech"];
-            response["source"] = "Algolia";
-            response["data"] = songs;
             server.log(TAG, "speech:" + response["speech"]);
+            response["displayText"] = response["speech"];
             reply(response);
         });
     }
