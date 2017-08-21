@@ -3,7 +3,7 @@ const Good = require('good');
 const algoliasearch = require('algoliasearch');
 const client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
 const index = client.initIndex("songs");
-const version = 1;
+const version = 2;
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
@@ -12,14 +12,14 @@ const handleFulfilment = function (req, reply) {
         'backend_version': version,
         data: []
     };
+    let artist = '', artistOriginal = '', period = '', artistActual = '';
+    let allHitsHaveSameArtist = true;
 
-    let artist = '';
     if (req.payload.result.parameters['artist']) {
         artist = req.payload.result.parameters['artist'];
+        artistOriginal = req.payload.result.contexts[0].parameters['artist.original'];
         server.log(TAG, "Artist: " + artist);
     }
-
-    let period = '';
     if (req.payload.result.parameters['period']) {
         period = req.payload.result.parameters['period'];
         server.log(TAG, "Period: " + period);
@@ -27,7 +27,7 @@ const handleFulfilment = function (req, reply) {
 
     if (artist.length !== 0) {
         let songs = [];
-        index.search(artist, (err, content) => {
+        index.search(artist, {restrictSearchableAttributes: ['artistName']}, (err, content) => {
             if (err) {
                 server.error(err);
                 return;
@@ -37,11 +37,23 @@ const handleFulfilment = function (req, reply) {
             if (content.nbHits > 0) {
                 for (let i in content.hits) {
                     let hit = content.hits[i];
+                    if (hit.artistName != artist) {
+                        if (artistActual == '') {
+                            artistActual = hit.artistName;
+                        } else {
+                            if (artistActual != hit.artistName) {
+                                allHitsHaveSameArtist = false;
+                            }
+                        }
+                    }
                     server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
                     songs.push(hit);
                 }
-                response["speech"] = "I found those songs: " + songs.join(", ") + ".";
-                response["data"] = songs;
+                response["speech"] = "I found those songs by " + artistOriginal + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                response["data"] = {"songs": songs};
+                if (allHitsHaveSameArtist && artistActual != '') {
+                    response["data"]["artist"] = artistActual;
+                }
             } else {
                 response["speech"] = "I'm afraid I know no songs from " + artist + ".";
             }
