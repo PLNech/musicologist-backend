@@ -38,7 +38,7 @@ const handleFulfilment = function (req, reply) {
                 for (let i in content.hits) {
                     let hit = content.hits[i];
                     server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
-                    songs.push(hit.trackName);
+                    songs.push(hit);
                 }
                 response["speech"] = "I found those songs: " + songs.join(", ") + ".";
                 response["data"] = songs;
