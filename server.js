@@ -57,16 +57,13 @@ const handleFulfilment = function (req, reply) {
                         if (artistIsFoundExact) { // We found the expected artist
                             response["speech"] = "I found those songs by " + artistNames[0] + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
                         } else { // We found another artist -> trigger OTHER_ARTIST event
-                            response["followupEvent"] = {
-                                name: "OTHER_ARTIST",
-                                data: {
-                                    'artistOriginal': artistOriginal,
-                                    'artistActual': artistNames[0]
-                                }
-                            };
+                            response["followupEvent"] = {name: "OTHER_ARTIST"};
                             response["contextOut"] = [{
                                 name: "otherArtist",
-                                parameters: response.followupEvent.data,
+                                parameters: {
+                                    'artistOriginal': artistOriginal,
+                                    'artistActual': artistNames[0]
+                                },
                                 lifespan: 2
                             }];
                             delete response.data
