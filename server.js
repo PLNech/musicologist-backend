@@ -3,7 +3,7 @@ const Good = require('good');
 const algoliasearch = require('algoliasearch');
 const client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
 const index = client.initIndex("songs");
-const version = 2;
+const version = 3;
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
@@ -25,42 +25,48 @@ const handleFulfilment = function (req, reply) {
         server.log(TAG, "Period: " + period);
     }
 
-    if (artist.length !== 0) {
+    if (artist.length !== 0) { // Search for the given artist
         let songs = [];
         index.search(artist, {restrictSearchableAttributes: ['artistName']}, (err, content) => {
-            if (err) {
-                server.error(err);
-                return;
-            }
+                if (err) {
+                    server.error(err);
+                    return;
+                }
 
-            server.log(TAG, "Searching for " + artist + " returned " + content.nbHits + " results.");
-            if (content.nbHits > 0) {
-                for (let i in content.hits) {
-                    let hit = content.hits[i];
-                    if (hit.artistName != artist) {
-                        if (artistActual == '') {
-                            artistActual = hit.artistName;
-                        } else {
-                            if (artistActual != hit.artistName) {
-                                allHitsHaveSameArtist = false;
+                server.log(TAG, "Searching for " + artist + " returned " + content.nbHits + " results.");
+                if (content.nbHits > 0) {
+                    for (let i in content.hits) {
+                        let hit = content.hits[i];
+                        if (hit.artistName != artist) {
+                            if (artistActual == '') {
+                                artistActual = hit.artistName;
+                            } else {
+                                if (artistActual != hit.artistName) {
+                                    allHitsHaveSameArtist = false;
+                                }
                             }
                         }
+                        server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
+                        songs.push(hit);
                     }
-                    server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
-                    songs.push(hit);
+                    response["data"] = {"songs": songs};
+                    if (allHitsHaveSameArtist) {
+                        // Only one artist, reply `by` with its name
+                        const currentArtist = artistActual != '' ? artistActual : artist;
+                        response["speech"] = "I found those songs by " + currentArtist + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                        response["data"]["artist"] = artistActual;
+                    } else { // Several artists not matching the input, reply with `for input`
+                        response["speech"] = "I found those songs for " + artistOriginal + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                    }
                 }
-                response["speech"] = "I found those songs by " + artistOriginal + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
-                response["data"] = {"songs": songs};
-                if (allHitsHaveSameArtist && artistActual != '') {
-                    response["data"]["artist"] = artistActual;
+                else {
+                    response["speech"] = "I'm afraid I know no songs from " + artist + ".";
                 }
-            } else {
-                response["speech"] = "I'm afraid I know no songs from " + artist + ".";
+                server.log(TAG, "speech:" + response["speech"]);
+                response["displayText"] = response["speech"];
+                reply(response);
             }
-            server.log(TAG, "speech:" + response["speech"]);
-            response["displayText"] = response["speech"];
-            reply(response);
-        });
+        );
     }
 };
 
