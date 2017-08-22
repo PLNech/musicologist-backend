@@ -64,6 +64,11 @@ const handleFulfilment = function (req, reply) {
                                     'artist': artistNames[0]
                                 }
                             };
+                            response["contextOut"] = [{
+                                name: "otherArtist",
+                                parameters: response.followupEvent.data,
+                                lifespan: 2
+                            }];
                             delete response.data
                         }
                     } else { // We found several artists -> reply with the input
