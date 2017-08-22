@@ -3,17 +3,17 @@ const Good = require('good');
 const algoliasearch = require('algoliasearch');
 const client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
 const index = client.initIndex("songs");
-const version = 3;
+const version = 4;
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
+    let artist = '', artistOriginal = '', period = '';
+    let artistNames = [];
     let response = {
         'source': "Algolia",
         'backend_version': version,
         data: []
     };
-    let artist = '', artistOriginal = '', period = '', artistActual = '';
-    let allHitsHaveSameArtist = true;
 
     if (!(req.mime && req.mime == "application/json")) {
         response["speech"] = "Your request MUST be application/json.";
@@ -44,33 +44,31 @@ const handleFulfilment = function (req, reply) {
                 if (content.nbHits > 0) {
                     for (let i in content.hits) {
                         let hit = content.hits[i];
-                        if (hit.artistName != artist) {
-                            if (artistActual == '') {
-                                artistActual = hit.artistName;
-                            } else {
-                                if (artistActual != hit.artistName) {
-                                    allHitsHaveSameArtist = false;
-                                }
-                            }
+                        if (artistNames.indexOf(hit.artistName) == -1) {
+                            artistNames.push(hit.artistName);
                         }
                         server.log(TAG, 'Hit(' + hit.objectID + '): ' + hit.trackName);
                         songs.push(hit);
                     }
                     response["data"] = {"songs": songs};
-                    if (allHitsHaveSameArtist) {
-                        if (artistActual != '') {
-                            response["followupEvent"] = {"name": "OTHER_ARTIST", data: {
-                                'artistOriginal': artistOriginal,
-                                'artist': artistActual
-                            }};
-                        } else {
-                            response["speech"] = "I found those songs by " + currentArtist + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                    const artistIsFoundExact = artistNames.indexOf(artist) != -1;
+
+                    if (artistNames.length == 1) {
+                        if (artistIsFoundExact) { // We found the expected artist
+                            response["speech"] = "I found those songs by " + artistNames[0] + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                        } else { // We found another artist -> trigger OTHER_ARTIST event
+                            response["followupEvent"] = {
+                                "name": "OTHER_ARTIST", data: {
+                                    'artistOriginal': artistOriginal,
+                                    'artist': artistNames[0]
+                                }
+                            };
                         }
-                    } else { // Several artists not matching the input, reply with `for input`
-                        response["speech"] = "I found those songs for " + artistOriginal + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                    } else { // We found several artists -> reply with the input
+                        response["speech"] = "I found those songs from several artists matching \"" + artistOriginal + "\": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                        response["data"]["artists"] = artistNames;
                     }
-                }
-                else {
+                } else {
                     response["speech"] = "I'm afraid I know no songs from " + artist + ".";
                 }
                 server.log(TAG, "speech:" + response["speech"]);
