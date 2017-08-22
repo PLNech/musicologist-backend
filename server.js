@@ -58,7 +58,8 @@ const handleFulfilment = function (req, reply) {
                             response["speech"] = "I found those songs by " + artistNames[0] + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
                         } else { // We found another artist -> trigger OTHER_ARTIST event
                             response["followupEvent"] = {
-                                "name": "OTHER_ARTIST", data: {
+                                name: "OTHER_ARTIST",
+                                data: {
                                     'artistOriginal': artistOriginal,
                                     'artist': artistNames[0]
                                 }
