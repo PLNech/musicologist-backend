@@ -3,7 +3,7 @@ const Good = require('good');
 const algoliasearch = require('algoliasearch');
 const client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
 const index = client.initIndex("songs");
-const version = 4;
+const version = 5;
 
 const handleFulfilment = function (req, reply) {
     const TAG = "fulfil";
@@ -61,7 +61,7 @@ const handleFulfilment = function (req, reply) {
                                 name: "OTHER_ARTIST",
                                 data: {
                                     'artistOriginal': artistOriginal,
-                                    'artist': artistNames[0]
+                                    'artistActual': artistNames[0]
                                 }
                             };
                             response["contextOut"] = [{
