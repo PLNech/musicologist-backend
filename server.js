@@ -64,6 +64,7 @@ const handleFulfilment = function (req, reply) {
                                     'artist': artistNames[0]
                                 }
                             };
+                            delete response.data
                         }
                     } else { // We found several artists -> reply with the input
                         response["speech"] = "I found those songs from several artists matching \"" + artistOriginal + "\": " + songs.map(hit => hit.trackName).join(", ") + ".";
