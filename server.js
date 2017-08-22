@@ -51,10 +51,14 @@ const handleFulfilment = function (req, reply) {
                     }
                     response["data"] = {"songs": songs};
                     if (allHitsHaveSameArtist) {
-                        // Only one artist, reply `by` with its name
-                        const currentArtist = artistActual != '' ? artistActual : artist;
-                        response["speech"] = "I found those songs by " + currentArtist + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
-                        response["data"]["artist"] = artistActual;
+                        if (artistActual != '') {
+                            response["followupEvent"] = {"name": "OTHER_ARTIST", data: {
+                                'artistOriginal': artistOriginal,
+                                'artist': artistActual
+                            }};
+                        } else {
+                            response["speech"] = "I found those songs by " + currentArtist + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                        }
                     } else { // Several artists not matching the input, reply with `for input`
                         response["speech"] = "I found those songs for " + artistOriginal + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
                     }
