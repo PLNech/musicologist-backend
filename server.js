@@ -15,6 +15,12 @@ const handleFulfilment = function (req, reply) {
     let artist = '', artistOriginal = '', period = '', artistActual = '';
     let allHitsHaveSameArtist = true;
 
+    if (!(req.mime && req.mime == "application/json")) {
+        response["speech"] = "Your request MUST be application/json.";
+        reply(response).code(400);
+        return;
+    }
+
     if (req.payload.result.parameters['artist']) {
         artist = req.payload.result.parameters['artist'];
         artistOriginal = req.payload.result.contexts[0].parameters['artist.original'];
@@ -24,6 +30,7 @@ const handleFulfilment = function (req, reply) {
         period = req.payload.result.parameters['period'];
         server.log(TAG, "Period: " + period);
     }
+
 
     if (artist.length !== 0) { // Search for the given artist
         let songs = [];
