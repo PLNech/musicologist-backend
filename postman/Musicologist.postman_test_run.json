@@ -1,8 +1,8 @@
 {
-	"id": "91c51fa7-8cbf-b92e-9a95-ef64b85dc437",
+	"id": "bd8af6fa-082c-ecc6-d88b-c0384c81cd0f",
 	"name": "Musicologist",
 	"allTests": [],
-	"timestamp": 1503497525085,
+	"timestamp": 1503513043070,
 	"collection_id": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
 	"folder_id": 0,
 	"target_type": "collection",
@@ -22,7 +22,9 @@
 			"70a17e53-c36b-003b-c1a9-f02f4b57227b",
 			"afa84018-2f6a-73f3-d111-a3fc75e1cc41",
 			"1631f2be-1854-729c-f6d3-3d3c1348eb7d",
-			"ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc"
+			"ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc",
+			"1c8d463b-6295-0796-436b-27a82e770dfd",
+			"1f2ecd5d-6d85-af38-81cd-a5282473495f"
 		],
 		"folders": [],
 		"requests": [
@@ -41,6 +43,44 @@
 				"helperAttributes": {},
 				"time": 1503495555690,
 				"name": "POST /fulfillment PERIOD_MANY",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "1c8d463b-6295-0796-436b-27a82e770dfd",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by Led Zeppelin in 1971?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Led Zeppelin\",\n      \"period\": \"1971-01-01/1971-12-31\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n            \"artist\": \"Led Zeppelin\",\n            \"artist.original\": \"Led Zeppelin\",\n    \t\t\"period.original\": \"in 1971\",\n          \"period\": \"1971-01-01/1971-12-31\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data && jsonData.data.songs.length;\ntests[\"There should be no artists\"] = jsonData.data && jsonData.data.artists === undefined;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503499431306,
+				"name": "POST /fulfillment BOTH_ONE",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "1f2ecd5d-6d85-af38-81cd-a5282473495f",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by Eminem since 2002?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Eminem\",\n      \"period\": \"2002-01-01/2017-12-31\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"since 2002\",\n          \"artist\": \"Eminem\",\n      \t  \"period\": \"2002-01-01/2017-12-31\",\n          \"artist.original\": \"Eminem\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs && jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists && jsonData.data.artists.length;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503499593570,
+				"name": "POST /fulfillment BOTH_MANY",
 				"description": "",
 				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
 				"responses": []
@@ -109,13 +149,13 @@
 				"preRequestScript": null,
 				"pathVariables": {},
 				"method": "POST",
-				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music by Led Zeppelin?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Led Zeppelin\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"Led Zeppelin\",\n          \"artist.original\": \"Led Zeppelin\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music by Led Zeppelin?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Led Zeppelin\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"artist\": \"Led Zeppelin\",\n          \"artist.original\": \"Led Zeppelin\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
 				"dataMode": "raw",
 				"version": 2,
 				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be no artists\"] = jsonData.data.artists == undefined;",
 				"currentHelper": "normal",
 				"helperAttributes": {},
-				"time": 1503416245970,
+				"time": 1503499123697,
 				"name": "POST /fulfillment ARTIST_ONE",
 				"description": "",
 				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
@@ -128,13 +168,13 @@
 				"preRequestScript": null,
 				"pathVariables": {},
 				"method": "POST",
-				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by Eminem from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Eminem\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"Eminem\",\n          \"artist.original\": \"Eminem\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by Eminem from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Eminem\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"artist\": \"Eminem\",\n          \"artist.original\": \"Eminem\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
 				"dataMode": "raw",
 				"version": 2,
-				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists.length;",
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs && jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists && jsonData.data.artists.length;",
 				"currentHelper": "normal",
 				"helperAttributes": {},
-				"time": 1503416230776,
+				"time": 1503512913873,
 				"name": "POST /fulfillment ARTIST_MANY",
 				"description": "",
 				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
@@ -147,13 +187,13 @@
 				"preRequestScript": null,
 				"pathVariables": {},
 				"method": "POST",
-				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs in november 2008?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2008-11-01/2008-11-30\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"in november 2000\",\n          \"period\": \"2008-11-01/2008-11-30\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs in november 2008?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2008-11-01/2008-11-30\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"in november 2008\",\n          \"period\": \"2008-11-01/2008-11-30\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
 				"dataMode": "raw",
 				"version": 2,
 				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data && jsonData.data.songs.length;\ntests[\"There should be no artists\"] = jsonData.data && jsonData.data.artists === undefined;",
 				"currentHelper": "normal",
 				"helperAttributes": {},
-				"time": 1503495561026,
+				"time": 1503513013099,
 				"name": "POST /fulfillment PERIOD_ONE",
 				"description": "",
 				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
@@ -166,14 +206,14 @@
 				"preRequestScript": null,
 				"pathVariables": {},
 				"method": "POST",
-				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music in 1000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"1000-01-01/1000-12-31\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"in 1000?\",\n          \"period\": \"1000-01-01/1000-12-31\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
 				"dataMode": "raw",
 				"version": 2,
-				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists.length;",
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be no songs\"] = jsonData.data.songs === undefined;\ntests[\"There should be no artists\"] = jsonData.data.artists === undefined;",
 				"currentHelper": "normal",
 				"helperAttributes": {},
-				"time": 1503495011557,
-				"name": "POST /fulfillment PERIOD_ONE copy",
+				"time": 1503498914210,
+				"name": "POST /fulfillment PERIOD_MISS",
 				"description": "",
 				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
 				"responses": []
@@ -189,7 +229,7 @@
 		"owner": "458482",
 		"subscribed": false,
 		"createdAt": 1502892102188,
-		"updatedAt": 1503495282884,
+		"updatedAt": 1503499136099,
 		"write": true,
 		"isDeleted": false,
 		"published": false,
@@ -227,7 +267,7 @@
 				}
 			},
 			"times": [
-				89
+				65
 			],
 			"allTests": [
 				{
@@ -235,14 +275,443 @@
 					"Content-Type is present": true
 				}
 			],
-			"time": 89,
-			"totalRequestTime": 89,
+			"time": 65,
+			"totalRequestTime": 65,
+			"iterationResults": {}
+		},
+		{
+			"id": "9cbfdf36-55b9-997c-b6c0-ad932355f850",
+			"name": "POST /fulfillment ARTIST_ONE",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": 7,
+				"There should be no artists": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				139
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be some songs": 7,
+					"There should be no artists": true
+				}
+			],
+			"time": 139,
+			"totalRequestTime": 139,
+			"iterationResults": {}
+		},
+		{
+			"id": "a8c987a8-106b-606e-f89d-c918310669bc",
+			"name": "POST /fulfillment ARTIST_MANY",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": 2,
+				"There should be some artists": 2
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				160
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be some songs": 2,
+					"There should be some artists": 2
+				}
+			],
+			"time": 160,
+			"totalRequestTime": 160,
+			"iterationResults": {}
+		},
+		{
+			"id": "512c5e64-538c-b59e-827e-ed788a903ecf",
+			"name": "POST /fulfillment ARTIST_OTHER",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no data": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no data": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				127
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be no data": true
+				}
+			],
+			"time": 127,
+			"totalRequestTime": 127,
+			"iterationResults": {}
+		},
+		{
+			"id": "70a17e53-c36b-003b-c1a9-f02f4b57227b",
+			"name": "POST /fulfillment ARTIST_MISS",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no songs": true,
+				"There should be no artists": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				109
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be no songs": true,
+					"There should be no artists": true
+				}
+			],
+			"time": 109,
+			"totalRequestTime": 109,
+			"iterationResults": {}
+		},
+		{
+			"id": "afa84018-2f6a-73f3-d111-a3fc75e1cc41",
+			"name": "POST /fulfillment PERIOD_ONE",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 0,
+					"fail": 1
+				},
+				"There should be no artists": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				175
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true
+				}
+			],
+			"time": 175,
+			"totalRequestTime": 175,
+			"iterationResults": {}
+		},
+		{
+			"id": "1631f2be-1854-729c-f6d3-3d3c1348eb7d",
+			"name": "POST /fulfillment PERIOD_MANY",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": 20,
+				"There should be some artists": 15
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				167
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be some songs": 20,
+					"There should be some artists": 15
+				}
+			],
+			"time": 167,
+			"totalRequestTime": 167,
+			"iterationResults": {}
+		},
+		{
+			"id": "ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc",
+			"name": "POST /fulfillment PERIOD_MISS",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no songs": true,
+				"There should be no artists": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				179
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be no songs": true,
+					"There should be no artists": true
+				}
+			],
+			"time": 179,
+			"totalRequestTime": 179,
+			"iterationResults": {}
+		},
+		{
+			"id": "1c8d463b-6295-0796-436b-27a82e770dfd",
+			"name": "POST /fulfillment BOTH_ONE",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": 1,
+				"There should be no artists": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				169
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be some songs": 1,
+					"There should be no artists": true
+				}
+			],
+			"time": 169,
+			"totalRequestTime": 169,
+			"iterationResults": {}
+		},
+		{
+			"id": "1f2ecd5d-6d85-af38-81cd-a5282473495f",
+			"name": "POST /fulfillment BOTH_MANY",
+			"url": "localhost:8000/fulfillment",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": 1
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				145
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true,
+					"There should be some songs": 1
+				}
+			],
+			"time": 145,
+			"totalRequestTime": 145,
 			"iterationResults": {}
 		}
 	],
-	"totalPass": 2,
-	"totalFail": 0,
-	"totalTime": 89,
+	"totalPass": 34,
+	"totalFail": 3,
+	"totalTime": 1435,
 	"lifecycle": "done",
 	"willStop": false,
 	"requests": [
@@ -250,7 +719,7 @@
 			"name": "GET /",
 			"id": "420dda71-de33-49cc-3963-2a2c24948f37",
 			"url": "localhost:8000/",
-			"time": 89,
+			"time": 65,
 			"responseCode": {
 				"code": 200,
 				"name": "OK",
@@ -280,6 +749,449 @@
 			"tests": {
 				"Successful POST request": true,
 				"Content-Type is present": true
+			}
+		},
+		{
+			"name": "POST /fulfillment ARTIST_ONE",
+			"id": "9cbfdf36-55b9-997c-b6c0-ad932355f850",
+			"url": "localhost:8000/fulfillment",
+			"time": 139,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be no artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": true,
+				"There should be no artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment ARTIST_MANY",
+			"id": "a8c987a8-106b-606e-f89d-c918310669bc",
+			"url": "localhost:8000/fulfillment",
+			"time": 160,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be some artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": true,
+				"There should be some artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment ARTIST_OTHER",
+			"id": "512c5e64-538c-b59e-827e-ed788a903ecf",
+			"url": "localhost:8000/fulfillment",
+			"time": 127,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no data": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be no data"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no data": true
+			}
+		},
+		{
+			"name": "POST /fulfillment ARTIST_MISS",
+			"id": "70a17e53-c36b-003b-c1a9-f02f4b57227b",
+			"url": "localhost:8000/fulfillment",
+			"time": 109,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be no songs",
+				"There should be no artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no songs": true,
+				"There should be no artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment PERIOD_ONE",
+			"id": "afa84018-2f6a-73f3-d111-a3fc75e1cc41",
+			"url": "localhost:8000/fulfillment",
+			"time": 175,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 0,
+					"fail": 1
+				},
+				"There should be no artists": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be no artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					null,
+					null
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": false,
+				"There should be no artists": false
+			}
+		},
+		{
+			"name": "POST /fulfillment PERIOD_MANY",
+			"id": "1631f2be-1854-729c-f6d3-3d3c1348eb7d",
+			"url": "localhost:8000/fulfillment",
+			"time": 167,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be some artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": true,
+				"There should be some artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment PERIOD_MISS",
+			"id": "ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc",
+			"url": "localhost:8000/fulfillment",
+			"time": 179,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be no songs",
+				"There should be no artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be no songs": true,
+				"There should be no artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment BOTH_ONE",
+			"id": "1c8d463b-6295-0796-436b-27a82e770dfd",
+			"url": "localhost:8000/fulfillment",
+			"time": 169,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be no artists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be no artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": true,
+				"There should be no artists": true
+			}
+		},
+		{
+			"name": "POST /fulfillment BOTH_MANY",
+			"id": "1f2ecd5d-6d85-af38-81cd-a5282473495f",
+			"url": "localhost:8000/fulfillment",
+			"time": 145,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some songs": {
+					"pass": 1,
+					"fail": 0
+				},
+				"There should be some artists": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present",
+				"There should be some songs",
+				"There should be some artists"
+			],
+			"gridData": [
+				[
+					true,
+					true,
+					true,
+					null
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true,
+				"There should be some songs": true,
+				"There should be some artists": false
 			}
 		}
 	],
