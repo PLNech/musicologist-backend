@@ -8,6 +8,10 @@ class Fulfiller {
         this.version = 5;
         this.client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
         this.index = this.client.initIndex("songs");
+        this.resetResponse();
+    }
+
+    resetResponse() {
         this.response = {
             'source': "Algolia",
             'backend_version': this.version,
@@ -32,6 +36,7 @@ class Fulfiller {
     }
 
     serve(req, reply) {
+        this.resetResponse();
         this.reply = reply;
         let artist = '', artistOriginal = '', period = '';
         let period_start = 0, period_end = 0;
