@@ -1,0 +1,287 @@
+{
+	"id": "91c51fa7-8cbf-b92e-9a95-ef64b85dc437",
+	"name": "Musicologist",
+	"allTests": [],
+	"timestamp": 1503497525085,
+	"collection_id": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "7d238f73-d9b2-dd03-44b0-eb5512d20e5a",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+		"name": "Musicologist",
+		"description": "",
+		"order": [
+			"420dda71-de33-49cc-3963-2a2c24948f37",
+			"9cbfdf36-55b9-997c-b6c0-ad932355f850",
+			"a8c987a8-106b-606e-f89d-c918310669bc",
+			"512c5e64-538c-b59e-827e-ed788a903ecf",
+			"70a17e53-c36b-003b-c1a9-f02f4b57227b",
+			"afa84018-2f6a-73f3-d111-a3fc75e1cc41",
+			"1631f2be-1854-729c-f6d3-3d3c1348eb7d",
+			"ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc"
+		],
+		"folders": [],
+		"requests": [
+			{
+				"id": "1631f2be-1854-729c-f6d3-3d3c1348eb7d",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data && jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data && jsonData.data.artists.length;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503495555690,
+				"name": "POST /fulfillment PERIOD_MANY",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "420dda71-de33-49cc-3963-2a2c24948f37",
+				"headers": "",
+				"url": "{{SERVER}}/",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "GET",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"\",\n          \"artist.original\": \"\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"fulfillment\": {\n      \"speech\": \"This is a sample response from your webhook!\",\n      \"displayText\": \"This is a sample response from your webhook!\",\n      \"messages\": [\n        {\n          \"type\": 0,\n          \"speech\": \"This is a sample response from your webhook!\"\n        }\n      ]\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"text/html\");",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503396659651,
+				"name": "GET /",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "512c5e64-538c-b59e-827e-ed788a903ecf",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music by the rollin stun?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"the rollin stun\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"the rollin stun\",\n          \"artist.original\": \"the rollin stun\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be no data\"] = jsonData.data === undefined;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503419713854,
+				"name": "POST /fulfillment ARTIST_OTHER",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "70a17e53-c36b-003b-c1a9-f02f4b57227b",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by ASDSDFSVASD?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"ASDSDFSVASD\"\n      },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"artist\": \"ASDSDFSVASD\",\n          \"artist.original\": \"ASDSDFSVASD\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be no songs\"] = jsonData.data.songs === undefined;\ntests[\"There should be no artists\"] = jsonData.data.artists === undefined;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503495577777,
+				"name": "POST /fulfillment ARTIST_MISS",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "9cbfdf36-55b9-997c-b6c0-ad932355f850",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music by Led Zeppelin?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Led Zeppelin\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"Led Zeppelin\",\n          \"artist.original\": \"Led Zeppelin\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be no artists\"] = jsonData.data.artists == undefined;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503416245970,
+				"name": "POST /fulfillment ARTIST_ONE",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "a8c987a8-106b-606e-f89d-c918310669bc",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs by Eminem from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"artist\": \"Eminem\",\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\",\n          \"artist\": \"Eminem\",\n          \"artist.original\": \"Eminem\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists.length;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503416230776,
+				"name": "POST /fulfillment ARTIST_MANY",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "afa84018-2f6a-73f3-d111-a3fc75e1cc41",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any songs in november 2008?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2008-11-01/2008-11-30\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"in november 2000\",\n          \"period\": \"2008-11-01/2008-11-30\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data && jsonData.data.songs.length;\ntests[\"There should be no artists\"] = jsonData.data && jsonData.data.artists === undefined;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503495561026,
+				"name": "POST /fulfillment PERIOD_ONE",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			},
+			{
+				"id": "ce16e5b2-3b1b-970f-cdb2-05d55a8fc7bc",
+				"headers": "Content-Type: application/json\n",
+				"url": "{{SERVER}}/fulfillment",
+				"preRequestScript": null,
+				"pathVariables": {},
+				"method": "POST",
+				"data": "{\n  \"id\": \"7c620532-453f-4e0a-8375-65634db39c8e\",\n  \"timestamp\": \"2017-08-16T12:19:52.407Z\",\n  \"lang\": \"en\",\n  \"result\": {\n    \"source\": \"agent\",\n    \"resolvedQuery\": \"Any music from 2000?\",\n    \"action\": \"search\",\n    \"actionIncomplete\": false,\n    \"parameters\": {\n      \"period\": \"2000-01-01/2017-08-16\"\n    },\n    \"contexts\": [\n      {\n        \"name\": \"results\",\n        \"parameters\": {\n          \"period.original\": \"from 2000?\",\n          \"period\": \"2000-01-01/2017-08-16\"\n        },\n        \"lifespan\": 5\n      }\n    ],\n    \"metadata\": {\n      \"intentId\": \"c8dde8af-c4f5-46d3-bf35-36a8bd84b542\",\n      \"webhookUsed\": \"true\",\n      \"webhookForSlotFillingUsed\": \"false\",\n      \"webhookResponseTime\": 160,\n      \"intentName\": \"Search songs\"\n    },\n    \"score\": 1\n  },\n  \"status\": {\n    \"code\": 200,\n    \"errorType\": \"success\"\n  },\n  \"sessionId\": \"7de134c9-3c29-428a-80f0-bd9b3b0d50b2\"\n}",
+				"dataMode": "raw",
+				"version": 2,
+				"tests": "tests[\"Successful POST request\"] = responseCode.code === 200;\ntests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\").has(\"application/json\");\nvar jsonData = JSON.parse(responseBody);\ntests[\"There should be some songs\"] = jsonData.data.songs.length;\ntests[\"There should be some artists\"] = jsonData.data.artists.length;",
+				"currentHelper": "normal",
+				"helperAttributes": {},
+				"time": 1503495011557,
+				"name": "POST /fulfillment PERIOD_ONE copy",
+				"description": "",
+				"collectionId": "9829bb30-3cc2-4ad7-4dd6-5fd3826ebf46",
+				"responses": []
+			}
+		],
+		"timestamp": 1502892102188,
+		"synced": false,
+		"syncedFilename": "",
+		"remote_id": 0,
+		"remoteLink": "",
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"owner": "458482",
+		"subscribed": false,
+		"createdAt": 1502892102188,
+		"updatedAt": 1503495282884,
+		"write": true,
+		"isDeleted": false,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {},
+		"sharedWithTeam": false
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [
+		{
+			"id": "420dda71-de33-49cc-3963-2a2c24948f37",
+			"name": "GET /",
+			"url": "localhost:8000/",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				89
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Content-Type is present": true
+				}
+			],
+			"time": 89,
+			"totalRequestTime": 89,
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 2,
+	"totalFail": 0,
+	"totalTime": 89,
+	"lifecycle": "done",
+	"willStop": false,
+	"requests": [
+		{
+			"name": "GET /",
+			"id": "420dda71-de33-49cc-3963-2a2c24948f37",
+			"url": "localhost:8000/",
+			"time": 89,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action.",
+				"fromServer": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is present": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"gridTitles": [
+				"Successful POST request",
+				"Content-Type is present"
+			],
+			"gridData": [
+				[
+					true,
+					true
+				]
+			],
+			"tests": {
+				"Successful POST request": true,
+				"Content-Type is present": true
+			}
+		}
+	],
+	"synced": false
+}

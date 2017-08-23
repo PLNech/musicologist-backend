@@ -10,10 +10,13 @@
     "good-squeeze": "^5.0.2",
     "hapi": "^16.5.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "newman": "^3.8.1"
+  },
   "scripts": {
     "live": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "newman run postman/Musicologist.postman_test_run.json -e postman/Musicologist_dev.postman_environment.json",
+    "test-prod": "newman run postman/Musicologist.postman_test_run.json -e postman/Musicologist_prod.postman_environment.json"
   },
   "keywords": [
     "Algolia",
