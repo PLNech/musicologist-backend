@@ -99,8 +99,18 @@ class Fulfiller {
                     const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
 
                     if (artistNames.length === 1) {
-                        if (artistIsFoundExact) { // We found the expected artist
-                            this.response["speech"] = "I found those songs by " + artistNames[0] + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
+                        if (artistIsFoundExact) { // We found the expected artist -> trigger ONE_ARTIST event
+                            this.response["contextOut"] = [{
+                                name: "oneArtist",
+                                parameters: {
+                                    'artistName': artistNames[0],
+                                    'songTitles': songs.map(hit => hit.trackName)
+                                },
+                                lifespan: 1
+                            }];
+                            this.response['followupEvent'] = {
+                                name: "ONE_ARTIST",
+                            };
                         } else { // We found another artist -> trigger OTHER_ARTIST event
                             this.response["contextOut"] = [{
                                 name: "otherArtist",
