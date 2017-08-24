@@ -138,7 +138,7 @@ class Fulfiller {
                     this.response["contextOut"] = [{
                         name: "artistMiss",
                         parameters: {
-                            'artistName': artistNames[0],
+                            'artistName': artist,
                         },
                         lifespan: 1
                     }];
