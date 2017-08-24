@@ -11,10 +11,12 @@
     "hapi": "^16.5.2"
   },
   "devDependencies": {
+    "heroku": "^0.2.0",
     "newman": "^3.8.1"
   },
   "scripts": {
     "live": "nodemon server.js",
+    "logs": "heroku logs --tail",
     "test": "newman run postman/Musicologist.postman_test_run.json -e postman/Musicologist_dev.postman_environment.json",
     "test-prod": "newman run postman/Musicologist.postman_test_run.json -e postman/Musicologist_prod.postman_environment.json"
   },
