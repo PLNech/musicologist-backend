@@ -106,10 +106,14 @@ class Fulfiller {
                                 name: "otherArtist",
                                 parameters: {
                                     'artistOriginal': artistOriginal,
-                                    'artistActual': artistNames[0]
+                                    'artistActual': artistNames[0],
+                                    'songs': songs
                                 },
-                                lifespan: 2
+                                lifespan: 1
                             }];
+                            this.response['followupEvent'] = {
+                                name: "OTHER_ARTIST",
+                            };
                             delete this.response.data
                         }
                     } else { // We found several artists -> reply with the input
