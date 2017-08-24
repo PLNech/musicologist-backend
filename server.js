@@ -1,7 +1,7 @@
 'use strict';
 const Hapi = require('hapi');
 const Good = require('good');
-const Fulfiller = require('./Fulfiller.js');
+const Fulfiller = require('./fulfiller');
 
 
 // Init server
