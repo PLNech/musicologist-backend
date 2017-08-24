@@ -109,7 +109,7 @@ class Fulfiller {
                                 lifespan: 1
                             }];
                             this.response['followupEvent'] = {
-                                name: "ONE_ARTIST",
+                                name: "ARTIST_ONE",
                             };
                         } else { // We found another artist -> trigger OTHER_ARTIST event
                             this.response["contextOut"] = [{
@@ -122,7 +122,7 @@ class Fulfiller {
                                 lifespan: 1
                             }];
                             this.response['followupEvent'] = {
-                                name: "OTHER_ARTIST",
+                                name: "ARTIST_OTHER",
                             };
                             delete this.response.data
                         }
