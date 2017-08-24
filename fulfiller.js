@@ -130,8 +130,18 @@ class Fulfiller {
                         }
                     } else {
                         // We found several artists -> trigger ARTIST_MANY
-                        this.response["speech"] = "I found those songs from several artists matching \"" + artistOriginal + "\": " + songs.map(hit => hit.trackName).join(", ") + ".";
-                        this.response["data"]["artists"] = artistNames;
+                        this.response["contextOut"] = [{
+                            name: "artistMany",
+                            parameters: {
+                                'artistNames': artistNames,
+                                'artistOriginal': artistOriginal,
+                                'songTitles': songs.map(hit => hit.trackName)
+                            },
+                            lifespan: 1
+                        }];
+                        this.response['followupEvent'] = {
+                            name: "ARTIST_MANY",
+                        };
                     }
                 } else {
                     // We found no artists -> trigger ARTIST_MISS
