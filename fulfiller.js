@@ -107,7 +107,7 @@ class Fulfiller {
                                 parameters: {
                                     'artistOriginal': artistOriginal,
                                     'artistActual': artistNames[0],
-                                    'songs': songs
+                                    'songTitles': songs.map(hit => hit.trackName)
                                 },
                                 lifespan: 1
                             }];
