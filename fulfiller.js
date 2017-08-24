@@ -24,11 +24,11 @@ class Fulfiller {
     }
 
     sendReply(message, code) {
-        if (message != undefined) {
+        if (message !== undefined) {
             this.response["speech"] = message;
             this.response["displayText"] = message;
         }
-        if (code == undefined) {
+        if (code === undefined) {
             code = 200;
         }
         this.log("Reply(" + code + "):" + this.response["speech"]);
@@ -42,7 +42,7 @@ class Fulfiller {
         let period_start = 0, period_end = 0;
         let artistNames = [], songs = [];
 
-        if (!(req.mime && req.mime == "application/json")) {
+        if (!(req.mime && req.mime === "application/json")) {
             this.sendReply("Your request MUST be application/json.", 400);
             return;
         }
@@ -62,18 +62,18 @@ class Fulfiller {
 
         let searchQuery = '';
         const searchOptions = {};
-        if (artist != '') {
+        if (artist !== '') {
             searchOptions['restrictSearchableAttributes'] = ['artistName'];
             searchQuery = artist;
         }
 
-        if (period != '') {
+        if (period !== '') {
             const filter = "release_timestamp: " + period_start + ' TO ' + period_end;
             this.log("filter: " + filter);
             searchOptions['filters'] = filter;
         }
 
-        if (artist == '' && period == '') {
+        if (artist === '' && period === '') {
             this.log("No artist nor period -> nothing to search.");
             this.sendReply("I can't search for nothing. Please ask me about music by an artist or from a date/perion!");
             return;
@@ -89,16 +89,16 @@ class Fulfiller {
                 if (content.nbHits > 0) {
                     for (let i in content.hits) {
                         let hit = content.hits[i];
-                        if (artistNames.indexOf(hit.artistName) == -1) {
+                        if (artistNames.indexOf(hit.artistName) === -1) {
                             artistNames.push(hit.artistName);
                         }
                         this.log('Hit(' + hit.objectID + '): ' + hit.trackName);
                         songs.push(hit);
                     }
                     this.response["data"] = {"songs": songs};
-                    const artistIsFoundExact = artistNames.indexOf(artist) != -1;
+                    const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
 
-                    if (artistNames.length == 1) {
+                    if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist
                             this.response["speech"] = "I found those songs by " + artistNames[0] + ": " + songs.map(hit => hit.trackName).join(", ") + ".";
                         } else { // We found another artist -> trigger OTHER_ARTIST event
@@ -128,7 +128,7 @@ class Fulfiller {
 
 let fulfiller = undefined;
 module.exports = function (request, reply) {
-    if (fulfiller == undefined) {
+    if (fulfiller === undefined) {
         fulfiller = new Fulfiller(require("./server"));
         fulfiller.log("New fulfiller!");
     }
