@@ -101,7 +101,7 @@ class Fulfiller {
                     if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist -> trigger ONE_ARTIST event
                             this.response["contextOut"] = [{
-                                name: "oneArtist",
+                                name: "artistOne",
                                 parameters: {
                                     'artistName': artistNames[0],
                                     'songTitles': songs.map(hit => hit.trackName)
@@ -113,7 +113,7 @@ class Fulfiller {
                             };
                         } else { // We found another artist -> trigger OTHER_ARTIST event
                             this.response["contextOut"] = [{
-                                name: "otherArtist",
+                                name: "artistOther",
                                 parameters: {
                                     'artistOriginal': artistOriginal,
                                     'artistActual': artistNames[0],
