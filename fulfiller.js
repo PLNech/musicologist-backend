@@ -99,7 +99,8 @@ class Fulfiller {
                     const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
 
                     if (artistNames.length === 1) {
-                        if (artistIsFoundExact) { // We found the expected artist -> trigger ONE_ARTIST event
+                        if (artistIsFoundExact) {
+                            // We found the expected artist -> trigger ARTIST_ONE event
                             this.response["contextOut"] = [{
                                 name: "artistOne",
                                 parameters: {
@@ -111,7 +112,8 @@ class Fulfiller {
                             this.response['followupEvent'] = {
                                 name: "ARTIST_ONE",
                             };
-                        } else { // We found another artist -> trigger OTHER_ARTIST event
+                        } else {
+                            // We found another artist -> trigger ARTIST_OTHER event
                             this.response["contextOut"] = [{
                                 name: "artistOther",
                                 parameters: {
@@ -126,12 +128,23 @@ class Fulfiller {
                             };
                             delete this.response.data
                         }
-                    } else { // We found several artists -> reply with the input
+                    } else {
+                        // We found several artists -> trigger ARTIST_MANY
                         this.response["speech"] = "I found those songs from several artists matching \"" + artistOriginal + "\": " + songs.map(hit => hit.trackName).join(", ") + ".";
                         this.response["data"]["artists"] = artistNames;
                     }
                 } else {
-                    this.response["speech"] = "I'm afraid I know no songs by " + artist + ".";
+                    // We found no artists -> trigger ARTIST_MISS
+                    this.response["contextOut"] = [{
+                        name: "artistMiss",
+                        parameters: {
+                            'artistName': artistNames[0],
+                        },
+                        lifespan: 1
+                    }];
+                    this.response['followupEvent'] = {
+                        name: "ARTIST_MISS",
+                    };
                 }
                 this.sendReply();
             }
