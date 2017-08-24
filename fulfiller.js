@@ -1,11 +1,18 @@
 'use strict';
 const algoliasearch = require('algoliasearch');
 
+const State = Object.freeze({
+    ARTIST_ONE: {context: "artistOne", event: "ARTIST_ONE"},
+    ARTIST_OTHER: {context: "artistOther", event: "ARTIST_OTHER"},
+    ARTIST_MISS: {context: "artistMiss", event: "ARTIST_MISS"},
+    ARTIST_MANY: {context: "artistMany", event: "ARTIST_MANY"},
+});
+
 class Fulfiller {
 
     constructor(server) {
         this.server = server;
-        this.version = 5;
+        this.version = 6;
         this.client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
         this.index = this.client.initIndex("songs");
         this.resetResponse();
@@ -17,6 +24,7 @@ class Fulfiller {
             'backend_version': this.version,
             data: []
         };
+        this.responseIntent = undefined;
     }
 
     log(message) {
@@ -59,21 +67,17 @@ class Fulfiller {
             this.log("Split: " + period_start + " to " + period_end + " -> " + new Date(period_start) + " to " + new Date(period_end));
         }
 
-
         let searchQuery = '';
         const searchOptions = {};
         if (artist !== '') {
             searchOptions['restrictSearchableAttributes'] = ['artistName'];
             searchQuery = artist;
         }
-
         if (period !== '') {
             const filter = "release_timestamp: " + period_start + ' TO ' + period_end;
             this.log("filter: " + filter);
             searchOptions['filters'] = filter;
-        }
-
-        if (artist === '' && period === '') {
+        } else if (artist === '' && period === '') {
             this.log("No artist nor period -> nothing to search.");
             this.sendReply("I can't search for nothing. Please ask me about music by an artist or from a date/perion!");
             return;
@@ -99,63 +103,31 @@ class Fulfiller {
                     const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
 
                     if (artistNames.length === 1) {
-                        if (artistIsFoundExact) {
-                            // We found the expected artist -> trigger ARTIST_ONE event
-                            this.response["contextOut"] = [{
-                                name: "artistOne",
-                                parameters: {
-                                    'artistName': artistNames[0],
-                                    'songTitles': songs.map(hit => hit.trackName)
-                                },
-                                lifespan: 1
-                            }];
-                            this.response['followupEvent'] = {
-                                name: "ARTIST_ONE",
-                            };
-                        } else {
-                            // We found another artist -> trigger ARTIST_OTHER event
-                            this.response["contextOut"] = [{
-                                name: "artistOther",
-                                parameters: {
-                                    'artistOriginal': artistOriginal,
-                                    'artistActual': artistNames[0],
-                                    'songTitles': songs.map(hit => hit.trackName)
-                                },
-                                lifespan: 1
-                            }];
-                            this.response['followupEvent'] = {
-                                name: "ARTIST_OTHER",
-                            };
-                            delete this.response.data
+                        if (artistIsFoundExact) { // We found the expected artist -> trigger ARTIST_ONE event
+                            this.responseIntent = State.ARTIST_ONE;
+                        } else { // We found another artist -> trigger ARTIST_OTHER event
+                            this.responseIntent = State.ARTIST_OTHER;
                         }
-                    } else {
-                        // We found several artists -> trigger ARTIST_MANY
-                        this.response["contextOut"] = [{
-                            name: "artistMany",
-                            parameters: {
-                                'artistNames': artistNames,
-                                'artistOriginal': artistOriginal,
-                                'songTitles': songs.map(hit => hit.trackName)
-                            },
-                            lifespan: 1
-                        }];
-                        this.response['followupEvent'] = {
-                            name: "ARTIST_MANY",
-                        };
+                    } else { // We found several artists -> trigger ARTIST_MANY
+                        this.responseIntent = State.ARTIST_MANY;
                     }
-                } else {
-                    // We found no artists -> trigger ARTIST_MISS
-                    this.response["contextOut"] = [{
-                        name: "artistMiss",
-                        parameters: {
-                            'artistName': artist,
-                        },
-                        lifespan: 1
-                    }];
-                    this.response['followupEvent'] = {
-                        name: "ARTIST_MISS",
-                    };
+                } else { // We found no artists -> trigger ARTIST_MISS
+                    this.responseIntent = State.ARTIST_MISS;
                 }
+
+
+                this.response["contextOut"] = [{
+                    name: this.responseIntent.context,
+                    parameters: {
+                        'artistNames': artistNames,
+                        'artistOriginal': artistOriginal,
+                        'songTitles': songs.map(hit => hit.trackName)
+                    },
+                    lifespan: 1
+                }];
+                this.response['followupEvent'] = {
+                    name: this.responseIntent.event,
+                };
                 this.sendReply();
             }
         );
