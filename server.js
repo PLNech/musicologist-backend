@@ -21,6 +21,13 @@ server.route([
         }
     },
     {
+        method: 'GET',
+        path: '/wakeup',
+        handler: function (request, reply) {
+            reply();
+        }
+    },
+    {
         method: 'POST',
         path: '/fulfillment',
         handler: Fulfiller
