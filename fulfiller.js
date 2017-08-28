@@ -64,6 +64,13 @@ class Fulfiller {
             return;
         }
 
+        if (req.payload.result.action !== "search")
+        {
+            this.log("Action requested is not search (" + req.payload.result.action + ").");
+            this.sendReply(undefined, 200);
+            return;
+        }
+
         if (req.payload.result.parameters['artist']) {
             artist = req.payload.result.parameters['artist'];
             artistOriginal = req.payload.result.contexts[0].parameters['artist.original'];
