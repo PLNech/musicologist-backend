@@ -39,7 +39,16 @@ class Fulfiller {
         if (code === undefined) {
             code = 200;
         }
-        this.log("Reply(" + code + "):" + this.response["speech"]);
+
+        this.log("Reply(" + code + "):" + JSON.stringify(this.response, (key, value) => {
+            switch (key) {
+                case 'data':
+                    return '[...]';
+                case 'source':
+                    return
+            }
+            return value;
+        }, 1));
         this.reply(this.response).code(code);
     }
 
