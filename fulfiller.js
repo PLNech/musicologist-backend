@@ -115,7 +115,6 @@ class Fulfiller {
                         this.log('Hit(' + hit.objectID + '): ' + hit.trackName);
                         songs.push(hit);
                     }
-                    this.response["data"] = {"songs": songs};
                     const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
 
                     if (artistNames.length === 1) {
@@ -143,6 +142,7 @@ class Fulfiller {
                 }];
                 this.response['followupEvent'] = {
                     name: this.responseIntent.event,
+                    data: {hits: content.hits}
                 };
                 this.sendReply();
             }
