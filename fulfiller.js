@@ -22,7 +22,6 @@ class Fulfiller {
         this.response = {
             'source': "Algolia",
             'backend_version': this.version,
-            data: []
         };
         this.responseIntent = undefined;
     }
@@ -42,7 +41,7 @@ class Fulfiller {
 
         this.log("Reply(" + code + "):" + JSON.stringify(this.response, (key, value) => {
             switch (key) {
-                case 'data':
+                case 'hits':
                     return '[...]';
                 case 'source':
                     return
@@ -134,15 +133,15 @@ class Fulfiller {
                 this.response["contextOut"] = [{
                     name: this.responseIntent.context,
                     parameters: {
-                        'artistNames': artistNames,
-                        'artistOriginal': artistOriginal,
-                        'songTitles': songs.map(hit => hit.trackName)
+                        artistNames: artistNames,
+                        artistOriginal: artistOriginal,
+                        songTitles: songs.map(hit => hit.trackName),
+                        hits:content.hits
                     },
                     lifespan: 1
                 }];
                 this.response['followupEvent'] = {
                     name: this.responseIntent.event,
-                    data: {hits: content.hits}
                 };
                 this.sendReply();
             }
