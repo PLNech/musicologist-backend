@@ -63,8 +63,7 @@ class Fulfiller {
             return;
         }
 
-        if (req.payload.result.action !== "search")
-        {
+        if (req.payload.result.action !== "search") {
             this.log("Action requested is not search (" + req.payload.result.action + ").");
             this.sendReply(undefined, 200);
             return;
@@ -114,7 +113,7 @@ class Fulfiller {
                         this.log('Hit(' + hit.objectID + '): ' + hit.trackName);
                         songs.push(hit);
                     }
-                    const artistIsFoundExact = artistNames.indexOf(artist) !== -1;
+                    const artistIsFoundExact = artistNames.indexOf(artistOriginal) !== -1;
 
                     if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist -> trigger ARTIST_ONE event
@@ -136,7 +135,7 @@ class Fulfiller {
                         artistNames: artistNames,
                         artistOriginal: artistOriginal,
                         songTitles: songs.map(hit => hit.trackName),
-                        hits:content.hits
+                        hits: content.hits
                     },
                     lifespan: 1
                 }];
