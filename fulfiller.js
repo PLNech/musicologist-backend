@@ -113,7 +113,9 @@ class Fulfiller {
                         this.log('Hit(' + hit.objectID + '): ' + hit.trackName);
                         songs.push(hit);
                     }
-                    const artistIsFoundExact = artistNames.indexOf(artistOriginal) !== -1;
+                    const artistIsFoundExact = artistNames
+                        .map(it => it.toLowerCase())
+                        .indexOf(artistOriginal.toLowerCase()) !== -1;
 
                     if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist -> trigger ARTIST_ONE event
