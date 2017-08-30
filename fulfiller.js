@@ -137,7 +137,7 @@ class Fulfiller {
                         artistNames: artistNames,
                         artistOriginal: artistOriginal,
                         songTitles: songs.map(hit => hit.trackName),
-                        hits: content.hits
+                        data: content
                     },
                     lifespan: 1
                 }];
