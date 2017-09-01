@@ -126,7 +126,7 @@ class Fulfiller {
 
                 this.parameters['artistName'] = artist;
                 this.parameters['songTitles'] = songs.length > 0 ? songs.map(hit => hit.trackName) : undefined;
-                this.parameters['data'] = content;
+                this.response['data'] = content;
                 this.sendReply();
             }
         );
