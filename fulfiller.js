@@ -1,13 +1,6 @@
 'use strict';
 const algoliasearch = require('algoliasearch');
 
-const State = Object.freeze({
-    ARTIST_ONE: {context: "artistOne", event: "ARTIST_ONE"},
-    ARTIST_OTHER: {context: "artistOther", event: "ARTIST_OTHER"},
-    ARTIST_MISS: {context: "artistMiss", event: "ARTIST_MISS"},
-    ARTIST_MANY: {context: "artistMany", event: "ARTIST_MANY"},
-});
-
 class Fulfiller {
 
     constructor(server) {
@@ -19,11 +12,16 @@ class Fulfiller {
     }
 
     resetResponse() {
+        this.parameters = {};
         this.response = {
             'source': "Algolia",
             'backend_version': this.version,
+            'contextOut': [{
+                name: "results",
+                parameters: this.parameters,
+                lifespan: 1
+            }]
         };
-        this.responseIntent = undefined;
     }
 
     log(message) {
@@ -118,32 +116,19 @@ class Fulfiller {
                         .indexOf(artistOriginal.toLowerCase()) !== -1;
 
                     if (artistNames.length === 1) {
-                        if (artistIsFoundExact) { // We found the expected artist -> trigger ARTIST_ONE event
-                            this.responseIntent = State.ARTIST_ONE;
-                        } else { // We found another artist -> trigger ARTIST_OTHER event
-                            this.responseIntent = State.ARTIST_OTHER;
+                        if (artistIsFoundExact) { // We found the expected artist
+                            this.parameters["artist"] = artistNames[0];
+                        } else { // We found another artist
+                            this.parameters["artistOther"] = artistNames[0];
                         }
-                    } else { // We found several artists -> trigger ARTIST_MANY
-                        this.responseIntent = State.ARTIST_MANY;
+                    } else { // We found several artists
+                        this.parameters["artistNames"] = artistNames;
                     }
-                } else { // We found no artists -> trigger ARTIST_MISS
-                    this.responseIntent = State.ARTIST_MISS;
                 }
 
-
-                this.response["contextOut"] = [{
-                    name: this.responseIntent.context,
-                    parameters: {
-                        artistNames: artistNames,
-                        artistOriginal: artistOriginal,
-                        songTitles: songs.map(hit => hit.trackName),
-                        data: content
-                    },
-                    lifespan: 1
-                }];
-                this.response['followupEvent'] = {
-                    name: this.responseIntent.event,
-                };
+                this.parameters['artistName'] = artistOriginal;
+                this.parameters['songTitles'] = songs.length > 0 ? songs.map(hit => hit.trackName) : undefined;
+                this.parameters['data'] = content;
                 this.sendReply();
             }
         );
