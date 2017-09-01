@@ -67,9 +67,9 @@ class Fulfiller {
             return;
         }
 
-        if (req.payload.result.parameters['artist']) {
-            artist = req.payload.result.parameters['artist'];
-            artistOriginal = req.payload.result.contexts[0].parameters['artist.original'];
+        if (req.payload.result.parameters['artistName']) {
+            artist = req.payload.result.parameters['artistName'];
+            artistOriginal = req.payload.result.contexts[0].parameters['artistName.original'];
             this.log("Artist: " + artist);
         }
         if (req.payload.result.parameters['period']) {
