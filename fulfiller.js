@@ -69,7 +69,7 @@ class Fulfiller {
 
         if (req.payload.result.parameters['artistName']) {
             artist = req.payload.result.parameters['artistName'];
-            artistOriginal = req.payload.result.contexts[0].parameters['artistName.original'];
+            artistOriginal = req.payload.result.contexts[0].parameters['artistName.original'].replace("?", "").toLowerCase();
             this.log("Artist: " + artist);
         }
         if (req.payload.result.parameters['period']) {
@@ -112,8 +112,7 @@ class Fulfiller {
                         songs.push(hit);
                     }
                     const artistIsFoundExact = artistNames
-                        .map(it => it.toLowerCase())
-                        .indexOf(artistOriginal.toLowerCase()) !== -1;
+                        .map(it => it.toLowerCase()).indexOf(artistOriginal) !== -1;
 
                     if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist
