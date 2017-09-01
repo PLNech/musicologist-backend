@@ -52,7 +52,7 @@ class Fulfiller {
     serve(req, reply) {
         this.resetResponse();
         this.reply = reply;
-        let artist = '', artistOriginal = '', period = '';
+        let artist = '', period = '';
         let period_start = 0, period_end = 0;
         let artistNames = [], songs = [];
 
@@ -69,7 +69,6 @@ class Fulfiller {
 
         if (req.payload.result.parameters['artistName']) {
             artist = req.payload.result.parameters['artistName'];
-            artistOriginal = req.payload.result.contexts[0].parameters['artistName.original'].replace("?", "").toLowerCase();
             this.log("Artist: " + artist);
         }
         if (req.payload.result.parameters['period']) {
@@ -112,7 +111,7 @@ class Fulfiller {
                         songs.push(hit);
                     }
                     const artistIsFoundExact = artistNames
-                        .map(it => it.toLowerCase()).indexOf(artistOriginal) !== -1;
+                        .map(it => it.toLowerCase()).indexOf(artist.toLowerCase()) !== -1;
 
                     if (artistNames.length === 1) {
                         if (artistIsFoundExact) { // We found the expected artist
@@ -125,7 +124,7 @@ class Fulfiller {
                     }
                 }
 
-                this.parameters['artistName'] = artistOriginal;
+                this.parameters['artistName'] = artist;
                 this.parameters['songTitles'] = songs.length > 0 ? songs.map(hit => hit.trackName) : undefined;
                 this.parameters['data'] = content;
                 this.sendReply();
