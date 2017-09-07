@@ -18,7 +18,6 @@ class Fulfiller {
             'backend_version': this.version,
             'contextOut': [{
                 name: "results",
-                parameters: this.parameters,
                 lifespan: 1
             }],
             'followupEvent': {name: "RESULTS", data: this.parameters}
@@ -127,7 +126,7 @@ class Fulfiller {
 
                 this.parameters['artistName'] = artist;
                 this.parameters['songTitles'] = songs.length > 0 ? songs.map(hit => hit.trackName) : undefined;
-                this.response['data'] = content;
+                this.parameters['data'] = content;
                 this.sendReply();
             }
         );
