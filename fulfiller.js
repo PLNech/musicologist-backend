@@ -20,7 +20,8 @@ class Fulfiller {
                 name: "results",
                 parameters: this.parameters,
                 lifespan: 1
-            }]
+            }],
+            'followupEvent': {name: "RESULTS", data: this.parameters}
         };
     }
 
