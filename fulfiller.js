@@ -16,10 +16,6 @@ class Fulfiller {
         this.response = {
             'source': "Algolia",
             'backend_version': this.version,
-            'contextOut': [{
-                name: "results",
-                lifespan: 1
-            }],
             'followupEvent': {name: "RESULTS", data: this.parameters}
         };
     }
