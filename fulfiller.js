@@ -86,7 +86,7 @@ class Fulfiller {
             searchOptions['filters'] = filter;
         } else if (artist === '' && period === '') {
             this.log("No artist nor period -> nothing to search.");
-            this.sendReply("I can't search for nothing. Please ask me about music by an artist or from a date/perion!");
+            this.sendReply("I can't search for nothing. Please ask me about music by an artist or from a date/period!");
             return;
         }
 
