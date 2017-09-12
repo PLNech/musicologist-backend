@@ -59,6 +59,7 @@ class Fulfiller {
 
         if (req.payload.result.action !== "search") {
             this.log("Action requested is not search (" + req.payload.result.action + ").");
+            this.log("Request: " + JSON.stringify(req.payload, undefined, 1));
             this.sendReply(undefined, 200);
             return;
         }
