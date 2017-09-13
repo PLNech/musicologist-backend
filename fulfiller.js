@@ -25,6 +25,8 @@ class Fulfiller {
     }
 
     sendReply(message, code) {
+        this.response["data"] = this.parameters.data;
+
         if (message !== undefined) {
             this.response["speech"] = message;
             this.response["displayText"] = message;
