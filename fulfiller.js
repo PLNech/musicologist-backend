@@ -69,6 +69,7 @@ class Fulfiller {
         }
         if (req.payload.result.parameters['theme']) {
             theme = req.payload.result.parameters['theme'];
+            this.parameters['theme'] = theme;
             this.log("Theme: " + theme);
         }
 
