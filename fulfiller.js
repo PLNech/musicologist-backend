@@ -48,8 +48,7 @@ class Fulfiller {
     serve(req, reply) {
         this.resetResponse();
         this.reply = reply;
-        let artist = '', period = '';
-        let period_start = 0, period_end = 0;
+        let artist = '', theme = '';
         let artistNames = [], songs = [];
 
         if (!(req.mime && req.mime === "application/json")) {
@@ -57,7 +56,7 @@ class Fulfiller {
             return;
         }
 
-        if (req.payload.result.action !== "search") {
+        if (!req.payload.result.metadata.intentName.startsWith("Search")) {
             this.log("Action requested is not search (" + req.payload.result.action + ").");
             this.log("Request: " + JSON.stringify(req.payload, undefined, 1));
             this.sendReply(undefined, 200);
@@ -68,27 +67,23 @@ class Fulfiller {
             artist = req.payload.result.parameters['artistName'];
             this.log("Artist: " + artist);
         }
-        if (req.payload.result.parameters['period']) {
-            period = req.payload.result.parameters['period'];
-            this.log("Period: " + period);
-            [period_start, period_end] = period.split("/").map(Date.parse).map(x => x / 1000 /* engine expects second-level precision */);
-            this.log("Split: " + period_start + " to " + period_end + " -> " + new Date(period_start) + " to " + new Date(period_end));
+        if (req.payload.result.parameters['theme']) {
+            theme = req.payload.result.parameters['theme'];
+            this.log("Theme: " + theme);
         }
 
-        let searchQuery = '';
+        let searchQuery = artist + ' ' + theme;
         const searchOptions = {};
-        if (artist !== '') {
+        if (theme === '') {
+            if (artist === '') {
+                this.log("No artist nor theme -> nothing to search.");
+                this.log("Req: " + JSON.stringify(req.payload, undefined, 1));
+                //TODO Improve texts. Use event?
+                this.sendReply("I can't search for nothing. Please ask me about music by an artist or about a theme!");
+                return;
+            }
             searchOptions['restrictSearchableAttributes'] = ['artistName'];
             searchQuery = artist;
-        }
-        if (period !== '') {
-            const filter = "release_timestamp: " + period_start + ' TO ' + period_end;
-            this.log("filter: " + filter);
-            searchOptions['filters'] = filter;
-        } else if (artist === '' && period === '') {
-            this.log("No artist nor period -> nothing to search.");
-            this.sendReply("I can't search for nothing. Please ask me about music by an artist or from a date/period!");
-            return;
         }
 
         this.index.search(searchQuery, searchOptions, (err, content) => {
@@ -97,7 +92,7 @@ class Fulfiller {
                     return;
                 }
 
-                this.log("Searching for " + artist + " returned " + content.nbHits + " results.");
+                this.log("Searching for \"" + searchQuery + "\" returned " + content.nbHits + " results.");
                 if (content.nbHits > 0) {
                     for (let i in content.hits) {
                         let hit = content.hits[i];
