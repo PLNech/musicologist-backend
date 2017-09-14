@@ -120,7 +120,26 @@ class Fulfiller {
                 }
 
                 this.parameters['artistName'] = artist;
-                this.parameters['songTitles'] = songs.length > 0 ? songs.map(hit => hit.trackName) : undefined;
+                this.parameters['songCount'] = undefined;
+                this.parameters['songTitles'] = undefined;
+                switch (songs.length) {
+                    case 1:
+                        this.parameters['songCount'] = "a song";
+                        this.parameters['songTitles'] = songs[0].trackName;
+                        break;
+                    case 2:
+                        this.parameters['songCount'] = "two songs";
+                        this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(" and ");
+                        break;
+                    case 3:
+                        this.parameters['songCount'] = "three songs";
+                        this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(",");
+                        break;
+                    default:
+                        this.parameters['songCount'] = "several songs";
+                        this.parameters['songTitles'] = songs.slice(0, 3).map(hit => hit.trackName).join(",") + "..";
+                        break;
+                }
                 this.parameters['data'] = content;
                 this.sendReply();
             }
