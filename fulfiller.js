@@ -123,6 +123,8 @@ class Fulfiller {
                 this.parameters['songCount'] = undefined;
                 this.parameters['songTitles'] = undefined;
                 switch (songs.length) {
+                    case 0:
+                        break;
                     case 1:
                         this.parameters['songCount'] = "a song";
                         this.parameters['songTitles'] = songs[0].trackName;
