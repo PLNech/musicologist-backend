@@ -135,11 +135,11 @@ class Fulfiller {
                         break;
                     case 3:
                         this.parameters['songCount'] = "three songs";
-                        this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(",");
+                        this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(", ");
                         break;
                     default:
                         this.parameters['songCount'] = "several songs";
-                        this.parameters['songTitles'] = songs.slice(0, 3).map(hit => hit.trackName).join(",") + "..";
+                        this.parameters['songTitles'] = songs.slice(0, 3).map(hit => hit.trackName).join(", ") + "..";
                         break;
                 }
                 this.parameters['data'] = content;
