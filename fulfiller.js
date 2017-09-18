@@ -24,12 +24,11 @@ class Fulfiller {
         this.server.log("Fulfiller", message);
     }
 
-    sendReply(message, code) {
+    sendReply(errorMessage, code) {
         this.response["data"] = this.parameters.data;
 
-        if (message !== undefined) {
-            this.response["speech"] = message;
-            this.response["displayText"] = message;
+        if (errorMessage !== undefined) {
+            this.parameters["error"] = errorMessage;
         }
         if (code === undefined) {
             code = 200;
