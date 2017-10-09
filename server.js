@@ -17,7 +17,11 @@ server.connection({
 server.register(AuthBearer, () => {
     server.auth.strategy('simple', 'bearer-access-token', {
         validateFunc: function (token, callback) {
-            return callback(null, token === AUTH_TOKEN, {token: token});
+            const valid = token === AUTH_TOKEN;
+            if (!valid) {
+                server.log("Auth", "Got invalid auth token: " + token);
+            }
+            return callback(null, valid, {token: token});
         }
     });
 
