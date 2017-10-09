@@ -2,7 +2,9 @@
 const Hapi = require('hapi');
 const Good = require('good');
 const Fulfiller = require('./fulfiller');
+const AuthBearer = require('hapi-auth-bearer-token');
 
+const AUTH_TOKEN = process.env.MUSICOLOGIST_AUTH_TOKEN;
 
 // Init server
 const server = new Hapi.Server();
@@ -11,28 +13,38 @@ server.connection({
     port: +process.env.PORT || 8000
 });
 
-// Setup routes
-server.route([
-    {
-        method: 'GET',
-        path: '/',
-        handler: function (request, reply) {
-            reply("Success!\n");
+// Setup Auth
+server.register(AuthBearer, () => {
+    server.auth.strategy('simple', 'bearer-access-token', {
+        validateFunc: function (token, callback) {
+            return callback(null, token === AUTH_TOKEN, {token: token});
         }
-    },
-    {
-        method: 'GET',
-        path: '/wakeup',
-        handler: function (request, reply) {
-            reply();
+    });
+
+    // Setup routes
+    server.route([
+        {
+            method: 'GET',
+            path: '/',
+            handler: function (request, reply) {
+                reply("Success!\n");
+            }
+        },
+        {
+            method: 'GET',
+            path: '/wakeup',
+            handler: function (request, reply) {
+                reply();
+            }
+        },
+        {
+            method: 'POST',
+            path: '/fulfillment',
+            handler: Fulfiller,
+            config: {auth: "simple"}
         }
-    },
-    {
-        method: 'POST',
-        path: '/fulfillment',
-        handler: Fulfiller
-    }
-]);
+    ]);
+});
 
 // Setup reporting
 server.register({
@@ -56,6 +68,7 @@ server.register({
         throw err; // error while loading the plugin
     }
 });
+
 
 // Run server
 server.start((err) => {
