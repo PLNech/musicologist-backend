@@ -77,15 +77,14 @@ class Fulfiller {
         let searchQuery = artist + ' ' + theme;
         const searchOptions = {};
         if (theme === '') {
-            if (artist === '') {
-                this.log("No artist nor theme -> nothing to search.");
-                this.log("Req: " + JSON.stringify(req.payload, undefined, 1));
-                //TODO Improve texts. Use event?
+            if (artist !== '') {
+                searchOptions['restrictSearchableAttributes'] = ['artistName'];
+                searchQuery = artist;
+            } else {
+                this.log("No artist nor theme -> nothing to search. Req: " + JSON.stringify(req.payload, undefined, 1));
                 this.sendReply("I can't search for nothing. Please ask me about music by an artist or about a theme!");
                 return;
             }
-            searchOptions['restrictSearchableAttributes'] = ['artistName'];
-            searchQuery = artist;
         }
 
         this.index.search(searchQuery, searchOptions, (err, content) => {
