@@ -52,6 +52,8 @@ class Fulfiller {
         let artist = '', theme = '';
         let artistNames = [], songs = [];
 
+        this.log("Request: " + JSON.stringify(req.payload, undefined, 1));
+
         if (!(req.mime && req.mime === "application/json")) {
             this.sendReply("Your request MUST be application/json.", 400);
             return;
