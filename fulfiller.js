@@ -16,7 +16,7 @@ class Fulfiller {
         this.response = {
             'source': "Algolia",
             'backend_version': this.version,
-            'followupEvent': {name: "RESULTS", data: this.parameters}
+            'followupEventInput': {name: "RESULTS", parameters /*TODO:data?*/: this.parameters}
         };
     }
 
@@ -57,19 +57,20 @@ class Fulfiller {
             return;
         }
 
-        if (!req.payload.result.metadata.intentName.startsWith("Search")) {
-            this.log("Action requested is not search (" + req.payload.result.action + ").");
+        if (!req.payload.queryResult.intent.displayName .startsWith("Search")) {
+            this.log("Action requested is not search (" + req.payload.queryResult.action + ").");
             this.log("Request: " + JSON.stringify(req.payload, undefined, 1));
             this.sendReply(undefined, 200);
             return;
         }
 
-        if (req.payload.result.parameters['artistName']) {
-            artist = req.payload.result.parameters['artistName'];
+        if (req.payload.queryResult.parameters['artistName']) {
+            artist = req.payload.queryResult.parameters['artistName'];
             this.log("Artist: " + artist);
         }
-        if (req.payload.result.parameters['theme']) {
-            theme = req.payload.result.parameters['theme'];
+
+        if (req.payload.queryResult.parameters['theme']) {
+            theme = req.payload.queryResult.parameters['theme'];
             this.parameters['theme'] = theme;
             this.log("Theme: " + theme);
         }
