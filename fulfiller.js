@@ -13,7 +13,7 @@ class Fulfiller {
     }
 
     resetResponse() {
-        this.parameters = {};
+        this.parameters = {backendVersion: this.version};
         this.response = {
             'source': "Algolia",
             'followupEventInput': {name: "RESULTS", parameters /*TODO:data?*/: this.parameters}
@@ -25,9 +25,6 @@ class Fulfiller {
     }
 
     sendReply(errorMessage, code) {
-        this.response["data"] = this.parameters.data;
-        this.response["data"]["backendVersion"] = this.version;
-
         if (errorMessage !== undefined) {
             this.parameters["error"] = errorMessage;
         }
@@ -60,7 +57,7 @@ class Fulfiller {
             return;
         }
 
-        if (!req.payload.queryResult.intent.displayName .startsWith("Search")) {
+        if (!req.payload.queryResult.intent.displayName.startsWith("Search")) {
             this.log("Action requested is not search (" + req.payload.queryResult.action + ").");
             this.log("Request: " + JSON.stringify(req.payload, undefined, 1));
             this.sendReply(undefined, 200);
