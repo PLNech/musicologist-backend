@@ -5,7 +5,8 @@ class Fulfiller {
 
     constructor(server) {
         this.server = server;
-        this.version = 6;
+        this.version = process.env.HEROKU_RELEASE_VERSION !== undefined ?
+            process.env.HEROKU_RELEASE_VERSION : 6;
         this.client = algoliasearch("TDNMRH8LS3", "ec222292c9b89b658fe00b34ff341194");
         this.index = this.client.initIndex("songs");
         this.resetResponse();
@@ -15,7 +16,6 @@ class Fulfiller {
         this.parameters = {};
         this.response = {
             'source': "Algolia",
-            'backend_version': this.version,
             'followupEventInput': {name: "RESULTS", parameters /*TODO:data?*/: this.parameters}
         };
     }
@@ -26,6 +26,7 @@ class Fulfiller {
 
     sendReply(errorMessage, code) {
         this.response["data"] = this.parameters.data;
+        this.response["data"]["backendVersion"] = this.version;
 
         if (errorMessage !== undefined) {
             this.parameters["error"] = errorMessage;
