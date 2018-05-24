@@ -1,5 +1,12 @@
 'use strict';
 const algoliasearch = require('algoliasearch');
+const WORDINGS = {one: 1, two: 2, three: 3, several: 4};
+const OPTIONS = {};
+OPTIONS[WORDINGS.one] = ["a", "one", "a single"];
+OPTIONS[WORDINGS.two] = ["two", "a couple", "a pair of"];
+OPTIONS[WORDINGS.three] = ["three", "a few"];
+OPTIONS[WORDINGS.several] = ["several", "quite a few", "various"];
+const NAMES = ["song", "tune", "track"];
 
 class Fulfiller {
 
@@ -125,19 +132,19 @@ class Fulfiller {
                     case 0:
                         break;
                     case 1:
-                        this.parameters['songCount'] = "a song";
+                        this.parameters['songCount'] = Fulfiller.randomWording(WORDINGS.one);
                         this.parameters['songTitles'] = songs[0].trackName;
                         break;
                     case 2:
-                        this.parameters['songCount'] = "two songs";
+                        this.parameters['songCount'] = Fulfiller.randomWording(WORDINGS.two);
                         this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(" and ");
                         break;
                     case 3:
-                        this.parameters['songCount'] = "three songs";
+                        this.parameters['songCount'] = Fulfiller.randomWording(WORDINGS.three);
                         this.parameters['songTitles'] = songs.map(hit => hit.trackName).join(", ");
                         break;
                     default:
-                        this.parameters['songCount'] = "several songs";
+                        this.parameters['songCount'] = Fulfiller.randomWording(WORDINGS.several);
                         this.parameters['songTitles'] = songs.slice(0, 3).map(hit => hit.trackName).join(", ") + "..";
                         break;
                 }
@@ -147,6 +154,15 @@ class Fulfiller {
         );
     };
 
+    static randomWording(keyword) {
+        const quantifiers = OPTIONS[keyword];
+        const quantifier = quantifiers[Math.floor(Math.random() * quantifiers.length)];
+
+        const name = NAMES[Math.floor(Math.random() * NAMES.length)];
+        const plural = keyword > 1 ? "s" : "";
+
+        return quantifier + " " + name + plural;
+    }
 }
 
 let fulfiller = undefined;
